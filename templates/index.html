@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Urgents Sorter</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Urgents Sorter</h1>
+
+        <!-- Form Tambah Pengaduan -->
+        <form method="POST">
+            <div class="form-container">
+                <input type="text" name="pengaduan" placeholder="Masukkan pengaduan..." required>
+                <input type="date" name="tanggal" required>
+                <button type="submit" name="submit_pengaduan" class="btn">Tambah Pengaduan</button>
+            </div>
+        </form>
+        
+        <h3>Model Pengaduan Lama</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th style="text-align: center;">No</th>
+                    <th style="text-align: center;">Tanggal</th>
+                    <th style="text-align: center;">Pengaduan</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in pengaduan_list_asli %}
+                <tr>
+                    <td style="text-align: center;">{{ loop.index }}</td>
+                    <td>{{ p.tanggal }}</td>
+                    <td>{{ p.pengaduan }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Form Khusus Cek Prioritas -->
+        <form method="POST">
+            <div class="bottom-button">
+                <button type="submit" name="cek_prioritas" class="btn">Cek Tingkat Prioritas</button>
+            </div>
+        </form>
+
+        <h3>Model Pengaduan dengan Prioritas</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th style="text-align: center;">No</th>
+                    <th style="text-align: center;">Tanggal</th>
+                    <th style="text-align: center;">Pengaduan</th>
+                    <th style="text-align: center;">Prioritas</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in pengaduan_list %}
+                <tr>
+                    <td style="text-align: center;">{{ loop.index }}</td>
+                    <td>{{ p.tanggal }}</td>
+                    <td>{{ p.pengaduan }}</td>
+                    <td style="text-align: center   ; vertical-align: middle;">
+                        {% if p.prioritas == 'Very High' %}
+                            <span style="padding :6px 15px !important;" class="badge full-width red">Very High</span>
+                        {% elif p.prioritas == 'High' %}
+                            <span class="badge full-width orange">High</span>
+                        {% elif p.prioritas == 'Medium' %}
+                            <span style="padding :6px 23px !important;" class="badge full-width yellow">Medium</span>
+                        {% elif p.prioritas == 'Low' %}
+                            <span class="badge full-width green">Low</span>
+                        {% else %}
+                            <span class="badge full-width gray">Unclassified</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
